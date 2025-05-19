@@ -33,3 +33,19 @@ English translate: https://github.com/Max-RM/1.20.0.21_MainActivity.smali_DIF/bl
 после чего начните компиляцию в apktool M.
 
 После установки игры в настройках активируйте доступ к файлам иначе игра не будет работать или не сможет создать новый мир.
+
+(дополнено 19.05.2025)
+Чтобы после установки игры она автоматически запрашивала разрешение на доступ к файлам и показывала всплывающее окно с запросом, нужно провести ещё несколько манипуляций. Перейдите по пути ...\smali\com\android\ находясь в папке декомпилированного apk и создайте папку "support", затем поместите в эту папку файл GRxPermissions.smali.
+Потом в файле MainActivity.smali через поиск найти строки:
+``.method public onCreate(Landroid/os/Bundle;)V
+    .locals 4``
+
+И после неё добавить:
+``    invoke-static {p0}, Lcom/android/support/GRxPermissions;->mCheckPerm(Landroid/app/Activity;)V``
+
+Получится:
+``.method public onCreate(Landroid/os/Bundle;)V
+    .locals 4
+
+    invoke-static {p0}, Lcom/android/support/GRxPermissions;->mCheckPerm(Landroid/app/Activity;)V``
+После установки окно запроса на доступ к файлам появится автоматически.
