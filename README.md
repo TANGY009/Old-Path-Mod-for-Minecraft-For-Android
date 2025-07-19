@@ -1,5 +1,7 @@
 # 🛠️ Path Mod for Minecraft for Android 1.21.94
 
+👉 [Русский перевод](README_ru.md)
+
 A Polished Guide to Make Minecraft for Android Store Worlds and Files the Old Way:
 
 **Target Path :**
