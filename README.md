@@ -1,51 +1,54 @@
-# 1.20.0.21_MainActivity.smali_DIF
+# 🛠️ Path Mod for Minecraft for Android 1.21.94
 
-English translate: https://github.com/Max-RM/1.20.0.21_MainActivity.smali_DIF/blob/main/readme_en.md
+A Polished Guide to Make Minecraft for Android Store Worlds and Files the Old Way:
 
-Примерная инструкция, чтобы заставить MCBE хранить миры по старому пути: ``/storage/emulated/0/games/com.mojang/minecraftWorlds``, 
-а не:
-``.../Android/data/...``
+**Target Path :**
+``/storage/emulated/0/games/com.mojang/minecraftWorlds``
 
-Спасибо inotflying (Egornya) за изобретение этого метода.
+**Instead of :**
+``/storage/emulated/0/Android/data/com.mojang.minecraftpe/files/games/com.mojang/minecraftWorlds``
 
-02.05.2023 я научился создавать MCBE apk которые используют старый путь хранения миров - /storage/emulated/0/games/com.mojang/minecraftWorlds
-Вместо нового /storage/emulated/0/Android/data/com.mojang.minecraftpe/files/games/com.mojang/minecraftWorlds
 
-Смысл? - Из-за ограничений Android 13 теперь вы (если у вас нет root доступа) не можете изменять файлы находящиеся в папках  .../Android/data... Даже если вы используете сторонние проводники (хотя есть вероятность, что какие-то проводники нашли обходные пути, но сейчас не об этом)
-Смысл в том, что и Blocktopograph, один из лучших NBT редакторов для Android теперь не может редактировать миры находящиеся там. Это так-же относиться к проекту NEFA и я был обязан найти пути решения проблем.
-Здесь на помощь и приходит этот репозиторий. Используя информацию в нëм вы можете лично отредактировать apk MCBE и заставить его хранить миры по старому пути.
+Thanks to inotflying (Egornya) for inventing this method.
 
-Сначала возьмите apk MCBE (предполагается, что он у вас уже есть) декомпилируйте его используя Apktool M https://4pda.to/forum/index.php?showtopic=1002506
-Перейдите по пути /smali/com/mojang/minecraftpe находясь в папке декомпилированного apk, найдите файл  MainActivity.smali и внесите в него изменения типо этих: https://github.com/Max-RM/1.20.0.21_MainActivity.smali_DIF/commit/97d794adef66fb586103744ae0a33e090c136b74
-То есть просто выполните изменения на основе показанных по ссылке.
-Потом в Android.manifest.xml игры внесите такие изменения: https://ibb.co/mHyRWZ3 то есть вставьте строку: 
 
-``<uses-permission 
-    	android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />``
+📦 **What You’ll Need :**
 
-(дополнено 21.07.2024):
-Обязательно измените целевую SDK на 28 (Android 9 Pie)
-и измените минимальную SDK на 1 или 23 (Android 1.0 или Android 6 Marshmallow)
-Это можно сделать отредактировав файл apktool.json в самых нижних строках или после компиляции apk выполнить "Быстрое редактирование" и поменять SDK на нужные. Желательно не делать минимальную SDK - 1 потому что это может вызвать ошибки установки на Android 15.
+[Apktool M](https://maximoff.su/apktool/?lang=en)
 
-Если эти шаги не выполнить, то в Android 14 в странице настроек приложения просто не появится возможность активации разрешения на специальный доступ к файлам.
+🚀 **Let's Begin :**
 
-после чего начните компиляцию в Apktool M.
+🔧 **DECOMPILATION**
 
-После установки игры в настройках активируйте доступ к файлам иначе игра не будет работать или не сможет создать новый мир.
+- Open Apktool M.
+- Go to the Applications tab, tap Installed Applications, and search for Minecraft using the search bar.
+- Select Minecraft, then tap Decompile.
+- Tick all options, then tap OK.
+- Wait for the process to complete, then tap GO TO.
 
-(дополнено 19.05.2025)
-Чтобы после установки игры она автоматически запрашивала разрешение на доступ к файлам и показывала всплывающее окно с запросом, нужно провести ещё несколько манипуляций. Перейдите по пути ...\smali\com\android\ находясь в папке декомпилированного apk и создайте папку "support", затем поместите в эту папку файл GRxPermissions.smali, который лежит в этом репозитории.
-Потом в файле MainActivity.smali через поиск найти строки:
-``.method public onCreate(Landroid/os/Bundle;)V
-    .locals 4``
+📝 **EDITING**
 
-И после неё добавить:
-``    invoke-static {p0}, Lcom/android/support/GRxPermissions;->mCheckPerm(Landroid/app/Activity;)V``
+- Open the /smali_classes2 folder. Navigate to:
+   ``/com/mojang/minecraftpe``
+-   Find and open MainActivity.smali.
+> 📌 Note: If this directory or file is not found in /smali_classes2, check the /smali folder instead.
+- After opening MainActivity.smali, make the [following changes](https://github.com/TANGY009/Old-Path-Mod-for-Minecraft-For-Android/commit/d7fc5ebae92b10de8fe615cdd3bd189452af7453) and save the file.
+- Exit the /smali_classes2 folder, go to the /smali folder, navigate to:
+``/com/android``
+- Create a folder named support, and place the GRxPermissions.smali file inside it.
+-  Then exit the /smali folder.
+- Open AndroidManifest.xml and add this line as [shown](https://github.com/TANGY009/Old-Path-Mod-for-Minecraft-For-Android/commit/6d3dd14ef7ea5d0a11f34502f715a51f48dd17f8).
+- Open apktool.json and make the [following changes](https://github.com/TANGY009/Old-Path-Mod-for-Minecraft-For-Android/commit/5d57260cf129945dc1db342265ffa5a22ea1a7ae).  
 
-Получится:
-``.method public onCreate(Landroid/os/Bundle;)V
-    .locals 4
+📦 **COMPILATION**
 
-    invoke-static {p0}, Lcom/android/support/GRxPermissions;->mCheckPerm(Landroid/app/Activity;)V``
-После установки окно запроса на доступ к файлам появится автоматически.
+-   Scroll up and tap Compile this project then tap ok.
+-   Wait for the process to finish.
+-   Then ensure that your Minecraft worlds are backed up and are in a safe location.
+-   After ensuring that your Minecraft worlds are backed up, uninstall the current Minecraft you have.
+-   Then install the apk you just compiled.     
+
+🎉 **MISSION ACCOMPLISHED**
+
+✅You’ve successfully modified Minecraft to store worlds using the old path!
+✨Open the app and give it storage permission then enjoying.✨
