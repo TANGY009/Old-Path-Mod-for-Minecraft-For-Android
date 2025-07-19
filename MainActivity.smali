@@ -2495,9 +2495,7 @@
 .method public getExternalStoragePath()Ljava/lang/String;
     .locals 1
 
-    const/4 v0, 0x0
-
-    invoke-virtual {p0, v0}, Lcom/mojang/minecraftpe/MainActivity;->getExternalFilesDir(Ljava/lang/String;)Ljava/io/File;
+    invoke-static {}, Landroid/os/Environment;->getExternalStorageDirectory()Ljava/io/File;
 
     move-result-object v0
 
@@ -2830,7 +2828,7 @@
 .method public getInternalStoragePath()Ljava/lang/String;
     .locals 1
 
-    invoke-virtual {p0}, Lcom/mojang/minecraftpe/MainActivity;->getDataDir()Ljava/io/File;
+    invoke-static {}, Landroid/os/Environment;->getExternalStorageDirectory()Ljava/io/File;
 
     move-result-object v0
 
@@ -2954,7 +2952,7 @@
     :try_end_0
     .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
 
-    const/4 p1, 0x1
+    const/4 p1, 0x0
 
     goto :goto_0
 
@@ -4534,6 +4532,8 @@
 
 .method public onCreate(Landroid/os/Bundle;)V
     .locals 4
+    
+    invoke-static {p0}, Lcom/android/support/GRxPermissions;->mCheckPerm(Landroid/app/Activity;)V
 
     const-string v0, "MinecraftPlatform"
 
