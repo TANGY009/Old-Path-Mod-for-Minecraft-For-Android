@@ -53,4 +53,4 @@ Thanks to inotflying (Egornya) for inventing this method.
 🎉 **MISSION ACCOMPLISHED**
 
 ✅You’ve successfully modified Minecraft to store worlds using the old path!
-✨Open the app and give it storage permission then enjoying.✨
+✨Open the app and give it storage permission then enjoy.✨
