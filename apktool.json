@@ -446,7 +446,7 @@
   "compactEntries": false,
   "isFrameworkApk": false,
   "sdkInfo": {
-    "minSdkVersion": "26",
-    "targetSdkVersion": "34"
+    "minSdkVersion": "23",
+    "targetSdkVersion": "28"
   }
 }
